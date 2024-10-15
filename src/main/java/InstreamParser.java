@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class InstreamParser {
 
     public Person createPersonObject(String input) {
+        input = input.replace(',', ' ');
         Scanner scanner = new Scanner(input);
         String personNummer = scanner.next();
         String fullName = scanner.next() + " " + scanner.next();
@@ -13,6 +14,7 @@ public class InstreamParser {
     }
 
     public long getLongID(String input) throws NumberFormatException {
-        return Long.parseLong(input.substring(input.indexOf(',') + 1));
+        int commaIndex = input.contains(",") ? input.indexOf(",") : input.length();
+        return Long.parseLong(input.substring(0, commaIndex));
     }
 }

@@ -22,7 +22,7 @@ class InstreamParserTest {
     void getLongID() {
         assertEquals(101090058L, instreamParser.getLongID("0101090058"));
         assertEquals(9911309999L, instreamParser.getLongID("9911309999"));
-        assertEquals(1019999L, instreamParser.getLongID("1019999"));
-        assertEquals(9912319999L, instreamParser.getLongID("9912319999"));
+        assertEquals(1019999L, instreamParser.getLongID("1019999,"));
+        assertEquals(9912319999L, instreamParser.getLongID("9912319999,"));
     }
 }
