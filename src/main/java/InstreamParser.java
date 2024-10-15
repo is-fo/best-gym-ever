@@ -11,4 +11,8 @@ public class InstreamParser {
 
         return new Person(personNummer, new NameDate(fullName, membershipDate));
     }
+
+    public long getLongID(String input) throws NumberFormatException {
+        return Long.parseLong(input.substring(input.indexOf(',') + 1));
+    }
 }
