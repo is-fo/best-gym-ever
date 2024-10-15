@@ -38,7 +38,22 @@ public class InstreamReader {
         return membersMap;
     }
 
-    public Person getPersonByID(long id, HashMap<Long, Person> membersMap) {
+    public Person getPersonByID(long id) {
         return membersMap.getOrDefault(id, null);
+    }
+
+    public Person getPersonByID(String psn) {
+        return membersMap.getOrDefault(new InstreamParser().getLongID(psn),null);
+    }
+
+    public Person getPersonByName(String name) {
+
+        for (Person person : membersMap.values()) {
+            if (person.getNameDate().getFullName().equals(name)) {
+                return person;
+            }
+        }
+
+        return null;
     }
 }

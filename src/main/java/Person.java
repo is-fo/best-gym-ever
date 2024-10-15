@@ -20,4 +20,15 @@ public class Person {
     public String toString() {
         return personNummer + " " + nameDate.toString();
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return personNummer.equals(((Person) o).personNummer);
+    }
+
+    @Override
+    public int hashCode() {
+        return personNummer.hashCode();
+    }
 }
