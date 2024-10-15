@@ -24,4 +24,10 @@ class DirectoryFinderTest {
         assertEquals(output, rootFinder.getOutputDirectory());
     }
 
+    @Test
+    void getInputDirectory() {
+        String input = rootFinder.getRootDirectory() + "\\input";
+        assertEquals(input, rootFinder.getInputDirectory);
+    }
+
 }
