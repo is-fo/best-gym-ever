@@ -20,7 +20,7 @@ class NameDateTest {
 
     @Test
     void getDate() {
-        assertEquals(LocalDate.now(), nameDate.getTodaysDate());
+        assertEquals(LocalDate.now(), nameDate.getMembershipDate());
     }
 
 }

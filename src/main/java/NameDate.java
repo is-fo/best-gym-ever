@@ -3,23 +3,23 @@ import java.time.LocalDate;
 public class NameDate {
 
     private String fullName;
-    private LocalDate todaysDate;
+    private LocalDate membershipDate;
 
-    public NameDate(String fullName, LocalDate todaysDate) {
+    public NameDate(String fullName, LocalDate membershipDate) {
         this.fullName = fullName;
-        this.todaysDate = todaysDate;
+        this.membershipDate = membershipDate;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public LocalDate getTodaysDate() {
-        return todaysDate;
+    public LocalDate getMembershipDate() {
+        return membershipDate;
     }
 
     @Override
     public String toString() {
-        return fullName + " " + todaysDate.toString();
+        return fullName + " " + membershipDate.toString();
     }
 }
