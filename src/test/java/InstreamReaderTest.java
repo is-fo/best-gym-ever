@@ -23,6 +23,7 @@ class InstreamReaderTest {
 
     @Test
     void getPersonByID() {
+        instreamReader.readFileToMap();
 
         assertEquals(instreamReader.getMembersMap().get(101090058L), instreamReader.getMembersMap().get(instreamReader.getPersonByID("0101090058")));
         assertEquals(instreamReader.getMembersMap().get(101090058L), instreamReader.getMembersMap().get(instreamReader.getPersonByID(101090058L)));
