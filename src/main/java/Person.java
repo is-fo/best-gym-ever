@@ -1,11 +1,13 @@
 public class Person {
 
-    private String personNummer;
-    private NameDate nameDate;
+    private final String personNummer;
+    private final NameDate nameDate;
+    private final Long pID;
 
     public Person(String personNummer, NameDate nameDate) {
         this.personNummer = personNummer;
         this.nameDate = nameDate;
+        this.pID = new InstreamParser().getLongID(personNummer);
     }
 
     public String getPersonNummer() {
@@ -24,11 +26,11 @@ public class Person {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
-        return personNummer.equals(((Person) o).personNummer);
+        return pID.equals(((Person) o).pID);
     }
 
     @Override
     public int hashCode() {
-        return personNummer.hashCode();
+        return pID.hashCode();
     }
 }
