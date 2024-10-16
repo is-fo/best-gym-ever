@@ -1,14 +1,13 @@
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InstreamReaderTest {
 
     InstreamReader instreamReader = new InstreamReader("\\testInput.txt");
-    Person isak = new Person("0101090058", new NameDate("Isak Folke", LocalDate.now()));
+
 
     @Test
     void readFileToMap() {
@@ -24,12 +23,23 @@ class InstreamReaderTest {
 
     @Test
     void getPersonByID() {
-        HashMap<Long, Person> personMap = new HashMap<>();
-        personMap.put(Long.parseLong(isak.getPersonNummer()), isak);
 
-        assertEquals(isak, instreamReader.getPersonByID(
-                Long.parseLong(isak.getPersonNummer()),
-                personMap));
+        assertEquals(instreamReader.getMembersMap().get(101090058L), instreamReader.getMembersMap().get(instreamReader.getPersonByID("0101090058")));
+        assertEquals(instreamReader.getMembersMap().get(101090058L), instreamReader.getMembersMap().get(instreamReader.getPersonByID(101090058L)));
+        assertNull(instreamReader.getMembersMap().getOrDefault(instreamReader.getPersonByID("9901080058"), null));
+        assertNull(instreamReader.getMembersMap().getOrDefault(instreamReader.getPersonByID(1312131213L), null));
+    }
+
+    @Test
+    void getPersonByName() {
+        instreamReader.readFileToMap();
+        assertEquals(new Person("0101091234", new NameDate("Isak Folke", LocalDate.parse("2024-10-15"))), instreamReader.getPersonByName("Isak Folke"));
+    }
+
+    @Test
+    void getMembersMap() {
+        instreamReader.readFileToMap();
+        assertEquals(4, instreamReader.getMembersMap().size());
     }
 
 }

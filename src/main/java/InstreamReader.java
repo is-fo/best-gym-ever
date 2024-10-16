@@ -11,16 +11,16 @@ public class InstreamReader {
         this.filePath = new DirectoryFinder().getInputDirectory() + fileName;
     }
 
-    public HashMap<Long, Person> readFileToMap() {
+    public void readFileToMap() {
         try (BufferedReader br = new BufferedReader(new FileReader(this.filePath))) {
+            InstreamParser parser = new InstreamParser();
             while (br.ready()) {
                 String line = br.readLine();
                 String dateLine = br.readLine();
-                InstreamParser parser = new InstreamParser();
                 long id = parser.getLongID(line);
+
                 Person person = parser.createPersonObject(line + " " + dateLine);
                 membersMap.put(id, person);
-                System.out.println(membersMap.get(id));
             }
         } catch (NumberFormatException e) {
             throw new RuntimeException("Kontrollera att formatet på personnumret. Exempel \"9911221234, Namn Namnson\".", e);
@@ -35,7 +35,6 @@ public class InstreamReader {
             throw new RuntimeException("Oväntat fel.", e);
         }
 
-        return membersMap;
     }
 
     public Person getPersonByID(long id) {
@@ -55,5 +54,9 @@ public class InstreamReader {
         }
 
         return null;
+    }
+
+    public HashMap<Long, Person> getMembersMap() {
+        return membersMap;
     }
 }
