@@ -20,6 +20,18 @@ class InstreamReaderTest {
         {Long@2140} 9702251234 -> {Person@2125} "9702251234 Jesper Ekstedt 2023-10-15"
          */
     }
+    @Test
+    void determineMembership() {
+        InstreamReader i = new InstreamReader("\\testInput.txt");
+        i.readFileToMap();
+
+        assertEquals(MemberType.CURRENT, i.determineMembership("Isak Folke"));
+        assertEquals(MemberType.CURRENT, i.determineMembership("0101091234"));
+        assertEquals(MemberType.FORMER, i.determineMembership("Jocke Wiltman"));
+        assertEquals(MemberType.FORMER, i.determineMembership("9012241234"));
+        assertEquals(MemberType.NOTAMEMBER, i.determineMembership("Ogiltig Medlem"));
+        assertEquals(MemberType.NOTAMEMBER, i.determineMembership("7112311234"));
+    }
 
     @Test
     void getPersonByID() {
@@ -34,7 +46,7 @@ class InstreamReaderTest {
     @Test
     void getPersonByName() {
         instreamReader.readFileToMap();
-        assertEquals(new Person("0101091234", new NameDate("Isak Folke", LocalDate.parse("2024-10-15"))), instreamReader.getPersonByName("Isak Folke"));
+        assertEquals(new Person("0101091234", "Isak Folke", LocalDate.parse("2024-10-15")), instreamReader.getPersonByName("Isak Folke"));
     }
 
     @Test

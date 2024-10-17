@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class InstreamParser {
+public class InputParser {
 
     public Person createPersonObject(String input) {
         input = input.replace(',', ' ');
@@ -10,7 +10,7 @@ public class InstreamParser {
         String fullName = scanner.next() + " " + scanner.next();
         LocalDate membershipDate = LocalDate.parse(scanner.next());
 
-        return new Person(personNummer, new NameDate(fullName, membershipDate));
+        return new Person(personNummer, fullName, membershipDate);
     }
 
     public long getLongID(String input) throws NumberFormatException {

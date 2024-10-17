@@ -6,7 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTest {
 
-    Person person = new Person("0101091234", new NameDate("Isak Folke", LocalDate.parse("2024-10-15")));
+    Person person = new Person("0101091234", "Isak Folke", LocalDate.parse("2024-10-15"));
+
+    @Test
+    void calculateMembership() {
+        assertEquals(MemberType.CURRENT, person.calculateMembership());
+    }
 
     @Test
     void toStringTest() {
@@ -16,5 +21,14 @@ class PersonTest {
     @Test
     void getPersonNummer() {
         assertEquals("0101091234", person.getPersonNummer());
+    }
+    @Test
+    void getName() {
+        assertEquals("Isak Folke", person.getFullName());
+    }
+
+    @Test
+    void getDate() {
+        assertEquals(LocalDate.parse("2024-10-15"), person.getMembershipDate());
     }
 }

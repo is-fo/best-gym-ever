@@ -1,26 +1,56 @@
+import java.time.LocalDate;
+
 public class Person {
 
     private final String personNummer;
-    private final NameDate nameDate;
     private final Long pID;
+    private final String fullName;
+    private final LocalDate membershipDate;
+    private MemberType membership;
 
-    public Person(String personNummer, NameDate nameDate) {
+
+    public Person(String personNummer, String fullName, LocalDate membershipDate) {
         this.personNummer = personNummer;
-        this.nameDate = nameDate;
-        this.pID = new InstreamParser().getLongID(personNummer);
+        this.fullName = fullName;
+        this.membershipDate = membershipDate;
+        this.pID = new InputParser().getLongID(personNummer);
+        this.membership = calculateMembership();
+    }
+
+    public MemberType calculateMembership() {
+        LocalDate oneYearAgo = LocalDate.now().minusYears(1);
+        if (membershipDate.isBefore(oneYearAgo)) {
+            return MemberType.FORMER;
+        } else if (membershipDate.isAfter(oneYearAgo)) {
+            return MemberType.CURRENT;
+        } else {
+            return MemberType.NOTAMEMBER;
+        }
+    }
+
+    public MemberType getMembership() {
+        return membership;
+    }
+
+    public void setMembership(MemberType membership) {
+        this.membership = membership;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public LocalDate getMembershipDate() {
+        return membershipDate;
     }
 
     public String getPersonNummer() {
         return personNummer;
     }
 
-    public NameDate getNameDate() {
-        return nameDate;
-    }
-
     @Override
     public String toString() {
-        return personNummer + " " + nameDate;
+        return personNummer + " " + fullName + " " + membershipDate.toString();
     }
     @Override
     public boolean equals(Object o) {
