@@ -32,10 +32,6 @@ public class Person {
         return membership;
     }
 
-    public void setMembership(MemberType membership) {
-        this.membership = membership;
-    }
-
     public String getFullName() {
         return fullName;
     }

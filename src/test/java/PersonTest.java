@@ -30,5 +30,6 @@ class PersonTest {
     @Test
     void getDate() {
         assertEquals(LocalDate.parse("2024-10-15"), person.getMembershipDate());
+        assertEquals(LocalDate.parse("2024-08-15"),  new Person("0101091234", "Isak Folke", LocalDate.parse("2024-08-15")).getMembershipDate());
     }
 }
