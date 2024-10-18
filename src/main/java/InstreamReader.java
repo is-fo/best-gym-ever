@@ -6,24 +6,24 @@ public class InstreamReader {
     private HashMap<Long, Person> membersMap;
     private String filePath;
 
-    public InstreamReader(String fileName) {
-        this.membersMap = new HashMap<>();
-        this.filePath = new DirectoryFinder().getInputDirectory() + fileName;
+    public InstreamReader() {
+        this.membersMap = new HashMap<>(40);
     }
 
-    public void readFileToMap() {
+    public void readFileToMap(String fileName) {
+        this.filePath = new DirectoryFinder().getInputDirectory() + fileName;
         try (BufferedReader br = new BufferedReader(new FileReader(this.filePath))) {
             InputParser parser = new InputParser();
             while (br.ready()) {
                 String line = br.readLine();
-                String dateLine = br.readLine();
                 long id = parser.getLongID(line);
 
+                String dateLine = br.readLine();
                 Person person = parser.createPersonObject(line + " " + dateLine);
                 membersMap.put(id, person);
             }
         } catch (NumberFormatException e) {
-            throw new RuntimeException("Kontrollera att formatet på personnumret. Exempel \"9911221234, Namn Namnson\".", e);
+            throw new RuntimeException("Kontrollera formatet på personnumret. Exempel \"9911221234, Namn Namnson\".", e);
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException("Kontrollera att filvägen och filnamnet överensstämmer med följande -> " + this.filePath, e);
@@ -37,16 +37,7 @@ public class InstreamReader {
 
     }
     public MemberType determineMembership(String nameOrID) {
-        Person p;
-        try {
-            long id = new InputParser().getLongID(nameOrID);
-            p = getPersonByID(id);
-        } catch (NumberFormatException e) {
-            p = getPersonByName(nameOrID);
-             if (p != null) {
-                 return p.getMembership();
-             }
-        }
+        Person p = getPersonByNameOrID(nameOrID);
 
         return p != null ? p.getMembership() : MemberType.NOTAMEMBER;
     }
@@ -56,7 +47,7 @@ public class InstreamReader {
     }
 
     public Person getPersonByID(String psn) {
-        return membersMap.getOrDefault(new InputParser().getLongID(psn),null);
+        return getPersonByID(new InputParser().getLongID(psn));
     }
 
     public Person getPersonByName(String name) {
@@ -70,7 +61,19 @@ public class InstreamReader {
         return null;
     }
 
+    public Person getPersonByNameOrID(String nameOrID) {
+        try {
+            return getPersonByID(new InputParser().getLongID(nameOrID));
+        } catch (NumberFormatException e) {
+            return getPersonByName(nameOrID);
+        }
+    }
+
     public HashMap<Long, Person> getMembersMap() {
         return membersMap;
+    }
+
+    public void setMembersMap(HashMap<Long, Person> membersMap) {
+        this.membersMap = membersMap;
     }
 }

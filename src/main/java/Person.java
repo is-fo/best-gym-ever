@@ -43,6 +43,9 @@ public class Person {
     public String getPersonNummer() {
         return personNummer;
     }
+    public String printDetails() {
+        return fullName + " " + personNummer + membership;
+    }
 
     @Override
     public String toString() {
@@ -58,6 +61,7 @@ public class Person {
 
     @Override
     public int hashCode() {
+        //return pID.hashCode(); samma sak
         return (int)(pID ^ (pID >>> 32));
     }
 }
