@@ -6,7 +6,7 @@ public class Person {
     private final Long pID;
     private final String fullName;
     private final LocalDate membershipDate;
-    private MemberType membership;
+    private final MemberType membership;
 
 
     public Person(String personNummer, String fullName, LocalDate membershipDate) {
@@ -19,7 +19,7 @@ public class Person {
 
     public MemberType calculateMembership() {
         LocalDate oneYearAgo = LocalDate.now().minusYears(1);
-        if (membershipDate.isBefore(oneYearAgo)) {
+        if (membershipDate.isBefore(oneYearAgo) || membershipDate.isEqual(oneYearAgo)) {
             return MemberType.FORMER;
         } else if (membershipDate.isAfter(oneYearAgo)) {
             return MemberType.CURRENT;
@@ -48,6 +48,7 @@ public class Person {
     public String toString() {
         return personNummer + " " + fullName + " " + membershipDate.toString();
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,6 +58,6 @@ public class Person {
 
     @Override
     public int hashCode() {
-        return pID.hashCode();
+        return (int)(pID ^ (pID >>> 32));
     }
 }
