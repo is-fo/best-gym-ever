@@ -1,3 +1,4 @@
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ public class MemberPrintLogger {
             nameOrID = parseName(nameOrID);
             person = in.getPersonByNameOrID(nameOrID);
             if (person != null && person.getMembership() == MemberType.CURRENT) {
-                logWorkOut(person, outputFile);
+                logWorkOut(createLogMessage(person), outputFile);
             }
         } catch (Exception e) {
             System.out.println("Skriv ett namn eller personnummer med formatet \"namn efternamn\" eller \"yymmddxxxx\"");
@@ -29,14 +30,15 @@ public class MemberPrintLogger {
         return person != null ? person.printDetails() : nameOrID + MemberType.NOTAMEMBER;
     }
 
-    public void logWorkOut(Person person, String outputFile) {
-        try (FileWriter writer = new FileWriter(new DirectoryFinder().getOutputDirectory() + outputFile, true)) {
-            writer.append(person.getFullName())
-                    .append(" ")
-                    .append(person.getPersonNummer())
-                    .append(" ")
-                    .append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                    .append("\n");
+    public String createLogMessage(Person person) {
+        return person.getFullName()
+                + " " + person.getPersonNummer()
+                + " " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + "\n";
+    }
+
+    public void logWorkOut(String message, String outputFile) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(new DirectoryFinder().getOutputDirectory() + outputFile, true))) {
+            writer.write(message);
         } catch (IOException e) {
             e.printStackTrace();
         }

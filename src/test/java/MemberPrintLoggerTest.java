@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,13 +29,22 @@ class MemberPrintLoggerTest {
         System.setIn(new ByteArrayInputStream(notAMember.getBytes()));
         assertEquals("Jul Tomten" + MemberType.NOTAMEMBER, p.getUserInput(in.getMembersMap(), outputFile));
     }
+    @Test
+    void createLogMessage() {
+        MemberPrintLogger mpl = new MemberPrintLogger();
+        Person p1 = new Person("0101091234", "Isak Folke", LocalDate.now());
+        assertEquals(p1.getFullName()
+                + " " + p1.getPersonNummer()
+                + " " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + "\n",
+                mpl.createLogMessage(p1));
+    }
 
     @Test
     void parseName() {
         MemberPrintLogger p = new MemberPrintLogger();
         String p1 = "isak folke";
         String p2 = "0101091234";
-        String p3 = "Isak Folke";
+        String p3 = "ISAK FOLKE";
         String p4 = "isak Folke";
         String p5 = "Isak folke";
         String expected = "Isak Folke";
