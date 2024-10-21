@@ -1,6 +1,6 @@
 public class DirectoryFinder {
 
-    private String rootDirectory = System.getProperty("user.dir");
+    private final String rootDirectory = System.getProperty("user.dir");
 
     public String getRootDirectory() {
         return rootDirectory;
